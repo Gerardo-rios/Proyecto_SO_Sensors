@@ -23,7 +23,7 @@ public class Proximidad extends AppCompatActivity implements SensorEventListener
         setContentView(R.layout.activity_proximidad);
         Obtener();
         manager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        //proximitrometro xd
+        //sensor de proximidad
         sensor = manager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
     }
 
