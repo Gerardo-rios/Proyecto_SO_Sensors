@@ -24,7 +24,7 @@ public class Luz extends AppCompatActivity implements SensorEventListener {
         setContentView(R.layout.activity_luz);
         Obtener();
         manager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        //proximitrometro xd
+        //sensor de luz
         sensor = manager.getDefaultSensor(Sensor.TYPE_LIGHT);
     }
 
