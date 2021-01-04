@@ -40,40 +40,34 @@ public class Acelerometro extends AppCompatActivity implements SensorEventListen
 
     @Override
     protected void onStart() {
-        super.onStart();
-        Toast.makeText(this, "Estoy en el onStart", Toast.LENGTH_SHORT).show();
+        super.onStart();        
     }
 
     @Override
     protected void onRestart() {
-        super.onRestart();
-        Toast.makeText(this, "Estoy en el onRestart", Toast.LENGTH_SHORT).show();
+        super.onRestart();      
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        //Toast.makeText(this, "Estoy en el onResume", Toast.LENGTH_SHORT).show();
         manager.registerListener(this, sensor, manager.SENSOR_DELAY_NORMAL);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        //Toast.makeText(this, "Estoy en el onPause", Toast.LENGTH_SHORT).show();
         manager.unregisterListener(this);
     }
 
     @Override
     protected void onStop() {
-        super.onStop();
-        Toast.makeText(this, "Estoy en el onStop", Toast.LENGTH_SHORT).show();
+        super.onStop();        
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
-        Toast.makeText(this, "Estoy en el onDestroy", Toast.LENGTH_SHORT).show();
+        super.onDestroy();        
     }
 
     @Override
