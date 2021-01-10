@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/nav_sensores"
-        android:name="com.example.proyecto_so.ui.sensores.SensoresFragment"
+        android:name="com.example.proyecto_so.ui.sensors.SensoresFragment"
         android:label="@string/menu_sensores"
         tools:layout="@layout/fragment_sensores" />
 

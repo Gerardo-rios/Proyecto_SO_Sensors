@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.proyecto_so.R;
 
-public class Luz extends AppCompatActivity implements SensorEventListener {
+public class Light extends AppCompatActivity implements SensorEventListener {
 
     TextView txt;
     SensorManager manager;

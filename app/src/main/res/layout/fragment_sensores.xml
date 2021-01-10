@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".ui.sensores.SensoresFragment">
+    tools:context=".ui.sensors.SensoresFragment">
 
     <Button
         android:id="@+id/button_luz"
@@ -15,7 +15,7 @@
         android:background="@drawable/custom_button"
         android:layout_marginTop="60dp"
         android:padding="50px"
-        android:text="LUZ"
+        android:text="START"
         android:textColor="@color/colorAccent"
         android:textStyle="bold" />
 
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="60dp"
         android:background="@drawable/custom_button"
-        android:text="PROXIMIDAD"
+        android:text="STOP"
         android:textColor="@color/colorAccent"
         android:textStyle="bold" />
 

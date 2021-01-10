@@ -1,9 +1,10 @@
-package com.example.proyecto_so.ui.sensores;
+package com.example.proyecto_so.ui.sensors;
 
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +15,10 @@ import androidx.fragment.app.Fragment;
 
 import com.example.proyecto_so.R;
 
-import com.example.proyecto_so.activities.Acelerometro;
-import com.example.proyecto_so.activities.Luz;
-import com.example.proyecto_so.activities.Proximidad;
+import com.example.proyecto_so.activities.Acelerometer;
+import com.example.proyecto_so.activities.Light;
+import com.example.proyecto_so.activities.Proximity;
+import com.example.proyecto_so.threats.AcelerometerThread;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,6 +39,10 @@ public class SensoresFragment extends Fragment implements View.OnClickListener{
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    public final String TAG = SensoresFragment.class.getName();
+    private com.example.proyecto_so.threats.AcelerometerThread acelerometerThread;
+    Thread thread;
 
     public SensoresFragment() {
         // Required empty public constructor
@@ -120,15 +126,27 @@ public class SensoresFragment extends Fragment implements View.OnClickListener{
         switch (v.getId()){
 
             case R.id.button_luz:
-                intencion = new Intent(getContext(), Luz.class);
-                startActivity(intencion);
+                /*intencion = new Intent(getContext(), Light.class);
+                startActivity(intencion);*/
+                Log.i(TAG, "ACELEROMETER START");
+                try {
+                    acelerometerThread = new AcelerometerThread(getActivity());
+                    thread = new Thread(acelerometerThread);
+                    thread.start();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
             case R.id.button_proximidad:
-                intencion = new Intent(getContext(), Proximidad.class);
-                startActivity(intencion);
+                /*intencion = new Intent(getContext(), Proximity.class);
+                startActivity(intencion);*/
+                Log.i(TAG, "ACELEROMETER STOP");
+                if (acelerometerThread != null){
+                    acelerometerThread.stop();
+                }
                 break;
             case R.id.button_acelerometro:
-                intencion = new Intent(getContext(), Acelerometro.class);
+                intencion = new Intent(getContext(), Acelerometer.class);
                 startActivity(intencion);
                 break;
         }

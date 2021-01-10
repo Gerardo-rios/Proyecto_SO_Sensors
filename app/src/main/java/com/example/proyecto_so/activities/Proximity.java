@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.proyecto_so.R;
 
-public class Proximidad extends AppCompatActivity implements SensorEventListener {
+public class Proximity extends AppCompatActivity implements SensorEventListener {
 
     TextView txt;
     SensorManager manager;
