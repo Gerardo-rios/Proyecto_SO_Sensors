@@ -41,7 +41,7 @@ public class AcelerometerThread implements Runnable, Serializable {
     }
 
     public void stop(){
-        this.exit = true;
+        exit = true;
         sensorManager.unregisterListener(this.sensorEventListener);
     }
 
@@ -63,7 +63,7 @@ public class AcelerometerThread implements Runnable, Serializable {
             };
         }
         sensorManager.registerListener(sensorEventListener, sensor, SensorManager.SENSOR_DELAY_NORMAL);
-        this.exit = false;
+        //this.exit = false;
     }
 
 }
