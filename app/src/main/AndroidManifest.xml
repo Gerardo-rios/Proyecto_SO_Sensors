@@ -4,6 +4,8 @@
 
     <uses-feature android:name="android.hardware.sensor.accelerometer"
         android:required="true"/>
+    <uses-feature android:name="android.hardware.sensor.light"
+        android:required="true"></uses-feature>
 
     <application
         android:allowBackup="true"

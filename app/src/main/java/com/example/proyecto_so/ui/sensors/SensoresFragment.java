@@ -9,16 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.proyecto_so.R;
 
-import com.example.proyecto_so.activities.Acelerometer;
-import com.example.proyecto_so.activities.Light;
-import com.example.proyecto_so.activities.Proximity;
 import com.example.proyecto_so.threats.AcelerometerThread;
+import com.example.proyecto_so.threats.LightThread;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,8 +40,10 @@ public class SensoresFragment extends Fragment implements View.OnClickListener{
     private OnFragmentInteractionListener mListener;
 
     public final String TAG = SensoresFragment.class.getName();
-    private com.example.proyecto_so.threats.AcelerometerThread acelerometerThread;
-    Thread thread;
+    private AcelerometerThread acelerometerThread;
+    private Thread threadA;
+    private Thread threadL;
+    private LightThread lightThread;
 
     public SensoresFragment() {
         // Required empty public constructor
@@ -86,12 +87,14 @@ public class SensoresFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Button luz = getActivity().findViewById(R.id.button_luz);
-        Button proxi = getActivity().findViewById(R.id.button_proximidad);
-        Button acele = getActivity().findViewById(R.id.button_acelerometro);
-        luz.setOnClickListener(this);
-        proxi.setOnClickListener(this);
-        acele.setOnClickListener(this);
+        Button startA = getActivity().findViewById(R.id.button_startA);
+        Button stopA = getActivity().findViewById(R.id.button_stopA);
+        Button startL = getActivity().findViewById(R.id.button_startL);
+        Button stopL = getActivity().findViewById(R.id.button_stopL);
+        startA.setOnClickListener(this);
+        stopA.setOnClickListener(this);
+        startL.setOnClickListener(this);
+        stopL.setOnClickListener(this);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -121,33 +124,41 @@ public class SensoresFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
 
-        Intent intencion;
-
         switch (v.getId()){
 
-            case R.id.button_luz:
-                /*intencion = new Intent(getContext(), Light.class);
-                startActivity(intencion);*/
+            case R.id.button_startA:
                 Log.i(TAG, "ACELEROMETER START");
                 try {
                     acelerometerThread = new AcelerometerThread(getActivity());
-                    thread = new Thread(acelerometerThread);
-                    thread.start();
+                    threadA = new Thread(acelerometerThread);
+                    threadA.start();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
                 break;
-            case R.id.button_proximidad:
-                /*intencion = new Intent(getContext(), Proximity.class);
-                startActivity(intencion);*/
+            case R.id.button_stopA:
                 Log.i(TAG, "ACELEROMETER STOP");
                 if (acelerometerThread != null){
                     acelerometerThread.stop();
+                    //threadA.stop();
                 }
                 break;
-            case R.id.button_acelerometro:
-                intencion = new Intent(getContext(), Acelerometer.class);
-                startActivity(intencion);
+            case R.id.button_startL:
+                Log.i(TAG, "LIGHT START");
+                try {
+                    lightThread = new LightThread(getActivity());
+                    threadL = new Thread(lightThread);
+                    threadL.start();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            case R.id.button_stopL:
+                if (lightThread != null){
+                    lightThread.stop();
+                    //threadL.stop();
+                }
+                Log.i(TAG, "LIGHT STOP");
                 break;
         }
 

@@ -6,6 +6,10 @@ public class AcelerometerModel {
     private float y;
     private float z;
 
+    public AcelerometerModel(){
+
+    }
+
     public AcelerometerModel(float x, float y, float z) {
         this.x = x;
         this.y = y;

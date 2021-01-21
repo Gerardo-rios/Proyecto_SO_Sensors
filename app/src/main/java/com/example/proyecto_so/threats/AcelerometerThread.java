@@ -7,8 +7,10 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.proyecto_so.R;
 import com.example.proyecto_so.data_models.AcelerometerModel;
 
 import java.io.Serializable;
@@ -29,15 +31,20 @@ public class AcelerometerThread implements Runnable, Serializable {
     private Sensor sensor;
     private SensorEventListener sensorEventListener;
 
-    public AcelerometerThread (Activity activity) throws Exception{
+    AcelerometerModel data = new AcelerometerModel();
+    TextView data_accelerometer;
 
-        if (activity == null){
-            throw new Exception("NULL ACTIVITY");
+    public AcelerometerThread (Activity a) throws Exception{
+
+        if (a == null){
+            throw new Exception("NULL ACTIVITY ON  " + TAG);
         }
-        this.activity = activity;
+        this.activity = a;
         this.sensorManager = (SensorManager) this.activity.getSystemService(Context.SENSOR_SERVICE);
         this.sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         this.exit = false;
+        data_accelerometer = a.findViewById(R.id.txt_dataA);
+
     }
 
     public void stop(){
@@ -53,8 +60,11 @@ public class AcelerometerThread implements Runnable, Serializable {
             this.sensorEventListener = new SensorEventListener() {
                 @Override
                 public void onSensorChanged(SensorEvent sensorEvent) {
-                    AcelerometerModel data = new AcelerometerModel(sensorEvent.values[0], sensorEvent.values[1], sensorEvent.values[2]);
-                    Log.i(TAG, String.valueOf(data.getX()) + " || " + String.valueOf(data.getY()) + " || "+String.valueOf(data.getZ()));
+                    data.setX(sensorEvent.values[0]);
+                    data.setY(sensorEvent.values[1]);
+                    data.setZ(sensorEvent.values[2]);
+                    //Log.i(TAG, String.valueOf(data.getX()) + " || " + String.valueOf(data.getY()) + " || "+String.valueOf(data.getZ()));
+                    data_accelerometer.setText(" -- " + data.getX() + " -- " + data.getY() + " -- " + data.getZ() + " -- ");
                 }
                 @Override
                 public void onAccuracyChanged(Sensor sensor, int i) {
@@ -66,4 +76,11 @@ public class AcelerometerThread implements Runnable, Serializable {
         //this.exit = false;
     }
 
+    public AcelerometerModel getData() {
+        return data;
+    }
+
+    public void setData(AcelerometerModel data) {
+        this.data = data;
+    }
 }
