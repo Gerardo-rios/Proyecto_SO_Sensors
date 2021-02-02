@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Artistas_RecyclerView extends AppCompatActivity {
+public class Sensors_RecyclerView extends AppCompatActivity {
 /*
     RecyclerView recyclerArtistas;
 

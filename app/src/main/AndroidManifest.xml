@@ -24,9 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.Light"></activity>
-        <activity android:name=".activities.Proximity" />
-        <activity android:name=".activities.Acelerometer" />
+
     </application>
 
 </manifest>

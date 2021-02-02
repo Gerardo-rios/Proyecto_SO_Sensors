@@ -1,6 +1,6 @@
 package com.example.proyecto_so.data_models;
 
-public class LightModel {
+public class LightModel implements SensorModel{
 
     private float x;
 
@@ -16,4 +16,18 @@ public class LightModel {
         return x;
     }
 
+    @Override
+    public String getNameSensor() {
+        return null;
+    }
+
+    @Override
+    public Integer getImage() {
+        return null;
+    }
+
+    @Override
+    public float[] getData() {
+        return new float[0];
+    }
 }
