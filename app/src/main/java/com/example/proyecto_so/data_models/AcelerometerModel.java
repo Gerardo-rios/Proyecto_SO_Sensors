@@ -8,6 +8,10 @@ public class AcelerometerModel implements SensorModel{
         this.data = new float[3];
     }
 
+    public AcelerometerModel(float [] d) {
+        this.data = d;
+    }
+
     public void setX(float x) {
         this.data[0] = x;
     }
@@ -18,6 +22,10 @@ public class AcelerometerModel implements SensorModel{
 
     public void setZ(float z) {
         this.data[2] = z;
+    }
+
+    public void setData(float [] d){
+        this.data = d;
     }
 
     @Override

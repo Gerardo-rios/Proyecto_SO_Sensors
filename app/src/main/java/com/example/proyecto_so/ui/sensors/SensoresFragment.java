@@ -1,15 +1,11 @@
 package com.example.proyecto_so.ui.sensors;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -18,11 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyecto_so.R;
 
-import com.example.proyecto_so.data_models.SensorModel;
+import com.example.proyecto_so.enumSensor.SensorsEnum;
 import com.example.proyecto_so.recycler.Adapter;
-import com.example.proyecto_so.threats.AcelerometerThread;
-import com.example.proyecto_so.threats.LightThread;
-import com.example.proyecto_so.threats.SensorThread;
+import com.example.proyecto_so.threats.Threads;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,9 +43,9 @@ public class SensoresFragment extends Fragment{
 
     public final String TAG = SensoresFragment.class.getName();
 
-    private RecyclerView recyclerView;
-    private Adapter adapter;
-    private List<SensorThread> sensors;
+    public Adapter adapter;
+    List<Threads> sensores;
+    RecyclerView recyclerView;
 
     public SensoresFragment() {
         // Required empty public constructor
@@ -98,21 +92,22 @@ public class SensoresFragment extends Fragment{
         super.onActivityCreated(savedInstanceState);
 
         recyclerView = getActivity().findViewById(R.id.recycler);
-        SensorThread acelerometerThread = null;
-        SensorThread lightThread = null;
+
+        this.sensores = new ArrayList<>();
         try {
-            acelerometerThread = new AcelerometerThread(getActivity());
-            lightThread = new LightThread(getActivity());
+            sensores.add(new Threads(getActivity(), SensorsEnum.ACCELEROMETER));
+            sensores.add(new Threads(getActivity(), SensorsEnum.LIGHT));
+            sensores.add(new Threads(getActivity(), SensorsEnum.PROXIMITY));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        sensors = new ArrayList<>();
-        sensors.add(acelerometerThread);
-        sensors.add(lightThread);
-        adapter = new Adapter(sensors);
+
+        adapter = new Adapter(sensores);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
+
     }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

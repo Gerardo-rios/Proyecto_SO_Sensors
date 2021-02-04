@@ -1,7 +1,5 @@
 package com.example.proyecto_so.recycler;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyecto_so.R;
-import com.example.proyecto_so.data_models.SensorModel;
-import com.example.proyecto_so.threats.AcelerometerThread;
-import com.example.proyecto_so.threats.LightThread;
-import com.example.proyecto_so.threats.SensorThread;
+import com.example.proyecto_so.threats.Threads;
 
 import java.util.List;
 
@@ -26,13 +21,12 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolderSensors>{
 
     public final String TAG = Adapter.class.getName();
 
-    List<SensorThread> sensors;
+    List<Threads> sensors;
     Thread thread;
 
-    public Adapter (List<SensorThread> sensores){
-        this.sensors = sensores;
+    public Adapter (List<Threads> lista){
+        this.sensors = lista;
     }
-
 
     @NonNull
     @Override
@@ -46,13 +40,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolderSensors>{
     @Override
     public void onBindViewHolder(@NonNull ViewHolderSensors holder, final int position) {
 
-        holder.nameSensor.setText(sensors.get(position).getModel().getNameSensor());
-        holder.sensorImage.setImageResource(sensors.get(position).getModel().getImage());
+        holder.nameSensor.setText(sensors.get(position).getModelo().getNameSensor());
+        holder.sensorImage.setImageResource(sensors.get(position).getModelo().getImage());
 
         try {
-            holder.left.setText(String.valueOf(sensors.get(position).getModel().getData()[0]));
-            holder.center.setText(String.valueOf(sensors.get(position).getModel().getData()[1]));
-            holder.right.setText(String.valueOf(sensors.get(position).getModel().getData()[2]));
+            holder.left.setText(String.valueOf(sensors.get(position).getModelo().getData()[0]));
+            holder.center.setText(String.valueOf(sensors.get(position).getModelo().getData()[1]));
+            holder.right.setText(String.valueOf(sensors.get(position).getModelo().getData()[2]));
         } catch (IndexOutOfBoundsException ex){
             Log.i(TAG, ex.getMessage());
         }
@@ -60,7 +54,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolderSensors>{
         holder.btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i(TAG, sensors.get(position).getModel().getNameSensor() + " START");
+                Log.i(TAG, sensors.get(position).getModelo().getNameSensor() + " START");
                 try {
                     thread = new Thread(sensors.get(position));
                     thread.start();
@@ -73,7 +67,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolderSensors>{
         holder.btnStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i(TAG, sensors.get(position).getModel().getNameSensor() + " STOP");
+                Log.i(TAG, sensors.get(position).getModelo().getNameSensor() + " STOP");
                 if (sensors.get(position) != null){
                     sensors.get(position).stop();
                 }

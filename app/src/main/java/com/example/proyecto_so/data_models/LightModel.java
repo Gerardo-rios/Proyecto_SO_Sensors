@@ -8,8 +8,12 @@ public class LightModel implements SensorModel{
         this.x = new float[3];
     }
 
-    public void setX(float x) {
-        this.x[0] = x;
+    public LightModel(float [] d){
+        this.x = d;
+    }
+
+    public void setX(float [] data) {
+        this.x = data;
     }
 
     @Override
