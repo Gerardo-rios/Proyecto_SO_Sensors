@@ -17,25 +17,22 @@ import com.example.proyecto_so.R;
 import com.example.proyecto_so.data_models.SensorModel;
 import com.example.proyecto_so.threats.AcelerometerThread;
 import com.example.proyecto_so.threats.LightThread;
+import com.example.proyecto_so.threats.SensorThread;
 
-
+import java.util.List;
 
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolderSensors>{
 
     public final String TAG = Adapter.class.getName();
-    private AcelerometerThread acelerometerThread;
-    private Thread threadA;
-    private Thread threadL;
-    private LightThread lightThread;
 
-    SensorModel sensor;
-    Activity activity;
+    List<SensorThread> sensors;
+    Thread thread;
 
-    public Adapter (SensorModel modelo, Activity activity){
-        this.sensor = modelo;
-        this.activity = activity;
+    public Adapter (List<SensorThread> sensores){
+        this.sensors = sensores;
     }
+
 
     @NonNull
     @Override
@@ -47,29 +44,27 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolderSensors>{
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolderSensors holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolderSensors holder, final int position) {
 
-        float [] datos = sensor.getData();
-        float x = 0, y = 0 , z = 0;
-        for (int i = 0; i < datos.length; i++){
-            x = datos[0];
-            y = datos[1];
-            z = datos[2];
+        holder.nameSensor.setText(sensors.get(position).getModel().getNameSensor());
+        holder.sensorImage.setImageResource(sensors.get(position).getModel().getImage());
+
+        try {
+            holder.left.setText(String.valueOf(sensors.get(position).getModel().getData()[0]));
+            holder.center.setText(String.valueOf(sensors.get(position).getModel().getData()[1]));
+            holder.right.setText(String.valueOf(sensors.get(position).getModel().getData()[2]));
+        } catch (IndexOutOfBoundsException ex){
+            Log.i(TAG, ex.getMessage());
         }
 
-        holder.nameSensor.setText(sensor.getNameSensor());
-        holder.sensorImage.setImageResource(sensor.getImage());
-        holder.left.setText(String.valueOf(x));
-        holder.center.setText(String.valueOf(y));
-        holder.center.setText(String.valueOf(z));
         holder.btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Log.i(TAG, "ACELEROMETER START");
+                Log.i(TAG, sensors.get(position).getModel().getNameSensor() + " START");
                 try {
-                    acelerometerThread = new AcelerometerThread(activity);
-                    threadA = new Thread(acelerometerThread);
-                    threadA.start();
+                    thread = new Thread(sensors.get(position));
+                    thread.start();
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -78,10 +73,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolderSensors>{
         holder.btnStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Log.i(TAG, "ACELEROMETER STOP");
-                if (acelerometerThread != null){
-                    acelerometerThread.stop();
-                    //threadA.stop();
+                Log.i(TAG, sensors.get(position).getModel().getNameSensor() + " STOP");
+                if (sensors.get(position) != null){
+                    sensors.get(position).stop();
                 }
             }
         });
@@ -90,7 +84,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolderSensors>{
 
     @Override
     public int getItemCount() {
-        return 0;
+        return sensors.size();
     }
 
     public static class ViewHolderSensors extends RecyclerView.ViewHolder{
@@ -105,7 +99,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolderSensors>{
 
             btnStart = itemView.findViewById(R.id.btn_start);
             btnStop = itemView.findViewById(R.id.btn_stop);
-            btnRestart = itemView.findViewById(R.id.btn_restart);
+            //btnRestart = itemView.findViewById(R.id.btn_restart);
             sensorImage = itemView.findViewById(R.id.imageSensor);
             center = itemView.findViewById(R.id.txt_dataCenter);
             left = itemView.findViewById(R.id.txt_dataLeft);

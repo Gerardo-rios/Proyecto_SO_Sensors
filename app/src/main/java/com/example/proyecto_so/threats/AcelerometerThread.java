@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.proyecto_so.R;
 import com.example.proyecto_so.data_models.AcelerometerModel;
+import com.example.proyecto_so.data_models.SensorModel;
 
 import java.io.Serializable;
 
@@ -21,7 +22,7 @@ import java.io.Serializable;
 * SI SE PRESIONA EL BOTON START 2 VECES ES IMPOSIBLE DETENERLO
 * */
 
-public class AcelerometerThread implements Runnable, Serializable {
+public class AcelerometerThread implements Serializable, SensorThread {
 
     private String TAG = AcelerometerThread.class.getName();
     private Activity activity;
@@ -31,7 +32,7 @@ public class AcelerometerThread implements Runnable, Serializable {
     private Sensor sensor;
     private SensorEventListener sensorEventListener;
 
-    AcelerometerModel data = new AcelerometerModel();
+    AcelerometerModel data;
     TextView data_accelerometer;
 
     public AcelerometerThread (Activity a) throws Exception{
@@ -43,8 +44,8 @@ public class AcelerometerThread implements Runnable, Serializable {
         this.sensorManager = (SensorManager) this.activity.getSystemService(Context.SENSOR_SERVICE);
         this.sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         this.exit = false;
-        data_accelerometer = a.findViewById(R.id.txt_dataA);
-
+        //data_accelerometer = a.findViewById(R.id.txt_dataA);
+        this.data = new AcelerometerModel();
     }
 
     public void stop(){
@@ -52,19 +53,32 @@ public class AcelerometerThread implements Runnable, Serializable {
         sensorManager.unregisterListener(this.sensorEventListener);
     }
 
+    @Override
+    public SensorModel getModel() {
+        return data;
+    }
+
+    public SensorModel setData(float x, float y, float z){
+        this.data = new AcelerometerModel();
+        this.data.setX(x);
+        this.data.setY(y);
+        this.data.setZ(z);
+        Log.i(TAG, String.valueOf(x) + String.valueOf(y) + String.valueOf(z));
+        return data;
+    }
 
     @Override
     public void run() {
 
         while (!exit){
+
             this.sensorEventListener = new SensorEventListener() {
                 @Override
                 public void onSensorChanged(SensorEvent sensorEvent) {
-                    data.setX(sensorEvent.values[0]);
-                    data.setY(sensorEvent.values[1]);
-                    data.setZ(sensorEvent.values[2]);
-                    //Log.i(TAG, String.valueOf(data.getX()) + " || " + String.valueOf(data.getY()) + " || "+String.valueOf(data.getZ()));
-                    data_accelerometer.setText(" -- " + data.getX() + " -- " + data.getY() + " -- " + data.getZ() + " -- ");
+
+                    setData(sensorEvent.values[0], sensorEvent.values[1], sensorEvent.values[2]);
+
+
                 }
                 @Override
                 public void onAccuracyChanged(Sensor sensor, int i) {
@@ -76,11 +90,4 @@ public class AcelerometerThread implements Runnable, Serializable {
         //this.exit = false;
     }
 
-    public AcelerometerModel getData() {
-        return data;
-    }
-
-    public void setData(AcelerometerModel data) {
-        this.data = data;
-    }
 }

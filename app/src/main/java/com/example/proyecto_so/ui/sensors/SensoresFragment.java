@@ -13,11 +13,19 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyecto_so.R;
 
+import com.example.proyecto_so.data_models.SensorModel;
+import com.example.proyecto_so.recycler.Adapter;
 import com.example.proyecto_so.threats.AcelerometerThread;
 import com.example.proyecto_so.threats.LightThread;
+import com.example.proyecto_so.threats.SensorThread;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,7 +35,7 @@ import com.example.proyecto_so.threats.LightThread;
  * Use the {@link SensoresFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SensoresFragment extends Fragment implements View.OnClickListener{
+public class SensoresFragment extends Fragment{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -40,10 +48,10 @@ public class SensoresFragment extends Fragment implements View.OnClickListener{
     private OnFragmentInteractionListener mListener;
 
     public final String TAG = SensoresFragment.class.getName();
-    private AcelerometerThread acelerometerThread;
-    private Thread threadA;
-    private Thread threadL;
-    private LightThread lightThread;
+
+    private RecyclerView recyclerView;
+    private Adapter adapter;
+    private List<SensorThread> sensors;
 
     public SensoresFragment() {
         // Required empty public constructor
@@ -81,20 +89,29 @@ public class SensoresFragment extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
+
         return inflater.inflate(R.layout.fragment_sensores, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Button startA = getActivity().findViewById(R.id.button_startA);
-        Button stopA = getActivity().findViewById(R.id.button_stopA);
-        Button startL = getActivity().findViewById(R.id.button_startL);
-        Button stopL = getActivity().findViewById(R.id.button_stopL);
-        startA.setOnClickListener(this);
-        stopA.setOnClickListener(this);
-        startL.setOnClickListener(this);
-        stopL.setOnClickListener(this);
+
+        recyclerView = getActivity().findViewById(R.id.recycler);
+        SensorThread acelerometerThread = null;
+        SensorThread lightThread = null;
+        try {
+            acelerometerThread = new AcelerometerThread(getActivity());
+            lightThread = new LightThread(getActivity());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        sensors = new ArrayList<>();
+        sensors.add(acelerometerThread);
+        sensors.add(lightThread);
+        adapter = new Adapter(sensors);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(adapter);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -119,49 +136,6 @@ public class SensoresFragment extends Fragment implements View.OnClickListener{
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    @Override
-    public void onClick(View v) {
-
-        switch (v.getId()){
-
-            case R.id.button_startA:
-                Log.i(TAG, "ACELEROMETER START");
-                try {
-                    acelerometerThread = new AcelerometerThread(getActivity());
-                    threadA = new Thread(acelerometerThread);
-                    threadA.start();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                break;
-            case R.id.button_stopA:
-                Log.i(TAG, "ACELEROMETER STOP");
-                if (acelerometerThread != null){
-                    acelerometerThread.stop();
-                    //threadA.stop();
-                }
-                break;
-            case R.id.button_startL:
-                Log.i(TAG, "LIGHT START");
-                try {
-                    lightThread = new LightThread(getActivity());
-                    threadL = new Thread(lightThread);
-                    threadL.start();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                break;
-            case R.id.button_stopL:
-                if (lightThread != null){
-                    lightThread.stop();
-                    //threadL.stop();
-                }
-                Log.i(TAG, "LIGHT STOP");
-                break;
-        }
-
     }
 
     /**

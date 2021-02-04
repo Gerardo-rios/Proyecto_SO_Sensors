@@ -11,11 +11,12 @@ import android.widget.TextView;
 
 import com.example.proyecto_so.R;
 import com.example.proyecto_so.data_models.LightModel;
+import com.example.proyecto_so.data_models.SensorModel;
 
 import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class LightThread implements Runnable, Serializable {
+public class LightThread implements SensorThread, Serializable {
 
     private String TAG = LightThread.class.getName();
     private Activity activity;
@@ -24,7 +25,7 @@ public class LightThread implements Runnable, Serializable {
     private SensorManager sensorManager;
     private SensorEventListener eventListener;
 
-    private LightModel data = new LightModel();
+    private LightModel data;
     TextView data_light;
 
     public LightThread(Activity a) throws Exception{
@@ -36,7 +37,8 @@ public class LightThread implements Runnable, Serializable {
         this.sensorManager = (SensorManager) activity.getSystemService(Context.SENSOR_SERVICE);
         this.sensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
         this.exit = new AtomicBoolean(false);
-        data_light = activity.findViewById(R.id.txt_dataL);
+        //data_light = activity.findViewById(R.id.txt_dataL);
+        this.data = new LightModel();
 
     }
 
@@ -48,10 +50,10 @@ public class LightThread implements Runnable, Serializable {
             this.eventListener = new SensorEventListener() {
                 @Override
                 public void onSensorChanged(SensorEvent sensorEvent) {
-
+                    data = new LightModel();
                     data.setX(sensorEvent.values[0]);
-                    //Log.i(TAG, String.valueOf(data.getX()));
-                    data_light.setText(" -- " + data.getX() + " -- ");
+                    Log.i(TAG, String.valueOf(sensorEvent.values[0]));
+                    //data_light.setText(" -- " + data.getX() + " -- ");
                 }
 
                 @Override
@@ -69,6 +71,11 @@ public class LightThread implements Runnable, Serializable {
     public void stop(){
         exit.set(true);
         sensorManager.unregisterListener(this.eventListener);
+    }
+
+    @Override
+    public SensorModel getModel() {
+        return data;
     }
 
 }

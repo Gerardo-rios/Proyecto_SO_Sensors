@@ -2,56 +2,36 @@ package com.example.proyecto_so.data_models;
 
 public class AcelerometerModel implements SensorModel{
 
-    private float x;
-    private float y;
-    private float z;
+    private float [] data;
 
-    public AcelerometerModel(){
-
-    }
-
-    public AcelerometerModel(float x, float y, float z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
-    }
-
-    public float getX() {
-        return x;
+    public AcelerometerModel() {
+        this.data = new float[3];
     }
 
     public void setX(float x) {
-        this.x = x;
-    }
-
-    public float getY() {
-        return y;
+        this.data[0] = x;
     }
 
     public void setY(float y) {
-        this.y = y;
-    }
-
-    public float getZ() {
-        return z;
+        this.data[1] = y;
     }
 
     public void setZ(float z) {
-        this.z = z;
+        this.data[2] = z;
     }
 
     @Override
     public String getNameSensor() {
-        return null;
+        return "ACCELEROMETER";
     }
 
     @Override
     public Integer getImage() {
-        return null;
+        return 0;
     }
 
     @Override
     public float[] getData() {
-        return new float[0];
+        return data;
     }
 }
