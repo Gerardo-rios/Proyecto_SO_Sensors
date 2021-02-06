@@ -3,6 +3,8 @@ package com.example.proyecto_so.ui.sensors;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+
+import com.example.proyecto_so.enumSensor.SensorsEnum;
 import com.example.proyecto_so.threats.Threads;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -207,8 +209,6 @@ public class SensoresFragment extends Fragment implements View.OnClickListener {
 
                 break;
         }
-
-
     }
 
     /**
