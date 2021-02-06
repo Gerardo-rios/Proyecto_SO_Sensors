@@ -5,30 +5,24 @@ public class ProximityModel implements SensorModel {
     private float x;
 
     public ProximityModel() {
+        this.x = 0;
+    }
+
+    public ProximityModel(float d) {
+        this.x = d;
+    }
+
+    public void setX(float d) {
+        this.x = d;
     }
 
     public float getX() {
-        return x;
-    }
-
-    public void setX(float x) {
-        this.x = x;
+        return this.x;
     }
 
     @Override
     public String getNameSensor() {
-        String res = "Sensor de Proximidad";
-        return res;
-    }
-
-    @Override
-    public Integer getImage() {
-        return null;
-    }
-
-    @Override
-    public float[] getData() {
-        return new float[0];
+        return "PROXIMITY";
     }
 
 }

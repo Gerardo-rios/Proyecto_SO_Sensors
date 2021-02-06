@@ -6,8 +6,4 @@ public interface SensorModel {
 
     String getNameSensor();
 
-    Integer getImage();
-
-    float[] getData();
-
 }

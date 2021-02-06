@@ -1,24 +1,19 @@
 package com.example.proyecto_so.ui.sensors;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import com.example.proyecto_so.threats.Threads;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.proyecto_so.R;
-
-import com.example.proyecto_so.threats.AcelerometerThread;
-import com.example.proyecto_so.threats.LightThread;
-import com.example.proyecto_so.threats.ProximityThread;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,13 +36,12 @@ public class SensoresFragment extends Fragment implements View.OnClickListener {
     private OnFragmentInteractionListener mListener;
 
     public final String TAG = SensoresFragment.class.getName();
-    private AcelerometerThread acelerometerThread;
-    private LightThread lightThread;
-    private ProximityThread proximityThread;
-    private Thread threadA;
-    private Thread threadL;
-    private Thread threadP;
+    //public Adapter adapter;
+    //List<Threads> sensores;
+    //RecyclerView recyclerView;
 
+    Thread tg, tl, tp;
+    Threads s1, s2, s3;
 
     public SensoresFragment() {
         // Required empty public constructor
@@ -83,7 +77,6 @@ public class SensoresFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
         return inflater.inflate(R.layout.fragment_sensores, container, false);
     }
@@ -91,26 +84,42 @@ public class SensoresFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Button startA = getActivity().findViewById(R.id.button_startA);
-        Button stopA = getActivity().findViewById(R.id.button_stopA);
-        Button startL = getActivity().findViewById(R.id.button_startL);
-        Button stopL = getActivity().findViewById(R.id.button_stopL);
-        Button startP = getActivity().findViewById(R.id.button_startP);
-        Button stopP = getActivity().findViewById(R.id.button_stopP);
-        startA.setOnClickListener(this);
-        stopA.setOnClickListener(this);
-        startL.setOnClickListener(this);
-        stopL.setOnClickListener(this);
-        startP.setOnClickListener(this);
-        stopP.setOnClickListener(this);
+
+        /*recyclerView = getActivity().findViewById(R.id.recycler);
+
+        this.sensores = new ArrayList<>();
+        try {
+            sensores.add(new Threads(getActivity(), SensorsEnum.GYROSCOPE));
+            sensores.add(new Threads(getActivity(), SensorsEnum.LIGHT));
+            sensores.add(new Threads(getActivity(), SensorsEnum.PROXIMITY));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        adapter = new Adapter(sensores);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(adapter);*/
+
+       //ImageView i1,i2,i3;
+
+        ImageView e1 = getActivity().findViewById(R.id.btn_start1);
+        ImageView e2 = getActivity().findViewById(R.id.btn_start2);
+        ImageView e3 = getActivity().findViewById(R.id.btn_start3);
+
+        ImageView f1 = getActivity().findViewById(R.id.btn_stop1);
+        ImageView f2 = getActivity().findViewById(R.id.btn_stop2);
+        ImageView f3 = getActivity().findViewById(R.id.btn_stop3);
+
+        e1.setOnClickListener(this);
+        e2.setOnClickListener(this);
+        e3.setOnClickListener(this);
+        f1.setOnClickListener(this);
+        f2.setOnClickListener(this);
+        f3.setOnClickListener(this);
+
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
+
 
     @Override
     public void onAttach(Context context) {
@@ -130,66 +139,75 @@ public class SensoresFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(View view) {
 
-        switch (v.getId()) {
+        switch (view.getId()){
 
-            case R.id.button_startA:
-                Log.i(TAG, "ACELEROMETER START");
+            case R.id.btn_start1:
+                Log.i(TAG, "GYROSCOPIO START");
                 try {
-                    acelerometerThread = new AcelerometerThread(getActivity());
-                    threadA = new Thread(acelerometerThread);
-                    threadA.start();
+                    s1 = new Threads(getActivity(), SensorsEnum.GYROSCOPE);
+                    tg = new Thread(s1);
+                    tg.start();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+
                 break;
-            case R.id.button_stopA:
-                Log.i(TAG, "ACELEROMETER STOP");
-                if (acelerometerThread != null) {
-                    acelerometerThread.stop();
-                    //threadA.stop();
-                }
-                break;
-            case R.id.button_startL:
+
+            case R.id.btn_start2:
+
                 Log.i(TAG, "LIGHT START");
                 try {
-                    lightThread = new LightThread(getActivity());
-                    threadL = new Thread(lightThread);
-                    threadL.start();
+                    s2 = new Threads(getActivity(), SensorsEnum.LIGHT);
+                    tl = new Thread(s2);
+                    tl.start();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                break;
-            case R.id.button_stopL:
-                if (lightThread != null) {
-                    lightThread.stop();
-                    //threadL.stop();
-                }
-                Log.i(TAG, "LIGHT STOP");
-                break;
 
-            case R.id.button_startP:
+                break;
+            case R.id.btn_start3:
+
+                Log.i(TAG, "PROXIMITY START");
                 try {
-                    proximityThread = new ProximityThread(getActivity());
-                    threadP = new Thread(proximityThread);
-                    Log.i(TAG, "PROXIMITY START");
-                    threadP.start();
+                    s3 = new Threads(getActivity(), SensorsEnum.PROXIMITY);
+                    tp = new Thread(s3);
+                    tp.start();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+
                 break;
 
-            case R.id.button_stopP:
-                if (proximityThread != null) {
-                    Log.i(TAG, "PROXIMITY STOP");
-                    proximityThread.stop();
-                    //threadL.stop();
-                } else {
-                    Log.i(TAG, "PROXIMITY SENSOR not started yet");
+            case R.id.btn_stop1:
+
+                Log.i(TAG, "GYROSCOPE STOP");
+                if (s1 != null){
+                    s1.stop();
+
                 }
+
+                break;
+            case R.id.btn_stop2:
+
+                Log.i(TAG, "LIGHT STOP");
+                if (s2 != null){
+                    s2.stop();
+                }
+
+                break;
+
+            case R.id.btn_stop3:
+
+                Log.i(TAG, "PROXIMITY STOP");
+                if (s3 != null){
+                    s3.stop();
+                }
+
                 break;
         }
+
 
     }
 
