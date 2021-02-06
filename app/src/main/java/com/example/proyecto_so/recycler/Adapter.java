@@ -16,7 +16,7 @@ import com.example.proyecto_so.threats.Threads;
 
 import java.util.List;
 
-
+/*
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolderSensors>{
 
     public final String TAG = Adapter.class.getName();
@@ -107,3 +107,4 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolderSensors>{
     }
 
 }
+*/

@@ -1,14 +1,14 @@
 package com.example.proyecto_so.data_models;
 
-public class AcelerometerModel implements SensorModel{
+public class GyroscopeModel implements SensorModel{
 
     private float [] data;
 
-    public AcelerometerModel() {
+    public GyroscopeModel() {
         this.data = new float[3];
     }
 
-    public AcelerometerModel(float [] d) {
+    public GyroscopeModel(float [] d) {
         this.data = d;
     }
 
@@ -28,18 +28,12 @@ public class AcelerometerModel implements SensorModel{
         this.data = d;
     }
 
+    public float [] getData(){
+        return this.data;
+    }
+
     @Override
     public String getNameSensor() {
-        return "ACCELEROMETER";
-    }
-
-    @Override
-    public Integer getImage() {
-        return 0;
-    }
-
-    @Override
-    public float[] getData() {
-        return data;
+        return "GYROSCOPE";
     }
 }

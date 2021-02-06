@@ -9,58 +9,6 @@
     android:visibility="visible"
     tools:visibility="visible"
     android:orientation="vertical">
-    <!--
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="364dp"
-        android:background="@color/base"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/scrollView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="17dp"
-            android:layout_marginBottom="9dp"
-            android:background="@color/casi_blanco"
-            android:fillViewport="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
-
-
-            <ImageButton
-                android:id="@+id/btn_restart"
-                android:layout_width="31dp"
-                android:layout_height="28dp"
-                android:layout_marginStart="344dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="130dp"
-                android:background="@drawable/shape_button2"
-                android:src="@android:drawable/ic_popup_sync"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
--->
-
 
     <LinearLayout
         android:id="@+id/linearLayout3"
@@ -129,7 +77,6 @@
                     android:id="@+id/btn_start"
                     android:layout_width="24dp"
                     android:layout_height="20dp"
-                    android:layout_marginStart="6dp"
                     android:layout_marginTop="6dp"
                     android:layout_marginEnd="5dp"
                     android:layout_marginBottom="6dp"

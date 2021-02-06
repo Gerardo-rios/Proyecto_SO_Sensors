@@ -3,9 +3,13 @@ package com.example.proyecto_so.ui.sensors;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -15,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.proyecto_so.R;
 
 import com.example.proyecto_so.enumSensor.SensorsEnum;
-import com.example.proyecto_so.recycler.Adapter;
 import com.example.proyecto_so.threats.Threads;
 
 import java.util.ArrayList;
@@ -29,7 +32,7 @@ import java.util.List;
  * Use the {@link SensoresFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SensoresFragment extends Fragment{
+public class SensoresFragment extends Fragment implements View.OnClickListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -43,9 +46,13 @@ public class SensoresFragment extends Fragment{
 
     public final String TAG = SensoresFragment.class.getName();
 
-    public Adapter adapter;
-    List<Threads> sensores;
-    RecyclerView recyclerView;
+    //public Adapter adapter;
+    //List<Threads> sensores;
+    //RecyclerView recyclerView;
+
+    Thread tg, tl, tp;
+    Threads s1, s2, s3;
+
 
     public SensoresFragment() {
         // Required empty public constructor
@@ -81,8 +88,6 @@ public class SensoresFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
 
         return inflater.inflate(R.layout.fragment_sensores, container, false);
     }
@@ -91,11 +96,11 @@ public class SensoresFragment extends Fragment{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        recyclerView = getActivity().findViewById(R.id.recycler);
+        /*recyclerView = getActivity().findViewById(R.id.recycler);
 
         this.sensores = new ArrayList<>();
         try {
-            sensores.add(new Threads(getActivity(), SensorsEnum.ACCELEROMETER));
+            sensores.add(new Threads(getActivity(), SensorsEnum.GYROSCOPE));
             sensores.add(new Threads(getActivity(), SensorsEnum.LIGHT));
             sensores.add(new Threads(getActivity(), SensorsEnum.PROXIMITY));
         } catch (Exception e) {
@@ -104,17 +109,28 @@ public class SensoresFragment extends Fragment{
 
         adapter = new Adapter(sensores);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);*/
+
+       //ImageView i1,i2,i3;
+
+        ImageView e1 = getActivity().findViewById(R.id.btn_start1);
+        ImageView e2 = getActivity().findViewById(R.id.btn_start2);
+        ImageView e3 = getActivity().findViewById(R.id.btn_start3);
+
+        ImageView f1 = getActivity().findViewById(R.id.btn_stop1);
+        ImageView f2 = getActivity().findViewById(R.id.btn_stop2);
+        ImageView f3 = getActivity().findViewById(R.id.btn_stop3);
+
+        e1.setOnClickListener(this);
+        e2.setOnClickListener(this);
+        e3.setOnClickListener(this);
+        f1.setOnClickListener(this);
+        f2.setOnClickListener(this);
+        f3.setOnClickListener(this);
 
     }
 
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -131,6 +147,77 @@ public class SensoresFragment extends Fragment{
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        switch (view.getId()){
+
+            case R.id.btn_start1:
+
+                Log.i(TAG, "GYROSCOPIO START");
+                try {
+                    s1 = new Threads(getActivity(), SensorsEnum.GYROSCOPE);
+                    tg = new Thread(s1);
+                    tg.start();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                break;
+            case R.id.btn_start2:
+
+                Log.i(TAG, "LIGHT START");
+                try {
+                    s2 = new Threads(getActivity(), SensorsEnum.LIGHT);
+                    tl = new Thread(s2);
+                    tl.start();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                break;
+            case R.id.btn_start3:
+
+                Log.i(TAG, "PROXIMITY START");
+                try {
+                    s3 = new Threads(getActivity(), SensorsEnum.PROXIMITY);
+                    tp = new Thread(s3);
+                    tp.start();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                break;
+            case R.id.btn_stop1:
+
+                Log.i(TAG, "GYROSCOPE STOP");
+                if (s1 != null){
+                    s1.stop();
+                }
+
+                break;
+            case R.id.btn_stop2:
+
+                Log.i(TAG, "LIGHT STOP");
+                if (s2 != null){
+                    s2.stop();
+                }
+
+                break;
+            case R.id.btn_stop3:
+
+                Log.i(TAG, "PROXIMITY STOP");
+                if (s3 != null){
+                    s3.stop();
+                }
+
+                break;
+
+        }
+
+
     }
 
     /**
