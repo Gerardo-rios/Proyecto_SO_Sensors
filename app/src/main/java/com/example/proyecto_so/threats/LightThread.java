@@ -43,7 +43,7 @@ public class LightThread implements Runnable, Serializable {
     @Override
     public void run() {
 
-        while (!exit.get()){
+        //while (!exit.get()){
 
             this.eventListener = new SensorEventListener() {
                 @Override
@@ -60,7 +60,7 @@ public class LightThread implements Runnable, Serializable {
                 }
             };
 
-        }
+        //}
 
         this.sensorManager.registerListener(eventListener, sensor, SensorManager.SENSOR_DELAY_NORMAL);
 

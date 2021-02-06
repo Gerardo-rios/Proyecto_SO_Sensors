@@ -56,7 +56,7 @@ public class AcelerometerThread implements Runnable, Serializable {
     @Override
     public void run() {
 
-        while (!exit){
+        //while (!exit){
             this.sensorEventListener = new SensorEventListener() {
                 @Override
                 public void onSensorChanged(SensorEvent sensorEvent) {
@@ -71,7 +71,7 @@ public class AcelerometerThread implements Runnable, Serializable {
 
                 }
             };
-        }
+        //}
         sensorManager.registerListener(sensorEventListener, sensor, SensorManager.SENSOR_DELAY_NORMAL);
         //this.exit = false;
     }

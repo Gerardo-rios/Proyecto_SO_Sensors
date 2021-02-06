@@ -18,6 +18,7 @@ import com.example.proyecto_so.R;
 
 import com.example.proyecto_so.threats.AcelerometerThread;
 import com.example.proyecto_so.threats.LightThread;
+import com.example.proyecto_so.threats.ProximityThread;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,7 +28,7 @@ import com.example.proyecto_so.threats.LightThread;
  * Use the {@link SensoresFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SensoresFragment extends Fragment implements View.OnClickListener{
+public class SensoresFragment extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -41,9 +42,12 @@ public class SensoresFragment extends Fragment implements View.OnClickListener{
 
     public final String TAG = SensoresFragment.class.getName();
     private AcelerometerThread acelerometerThread;
+    private LightThread lightThread;
+    private ProximityThread proximityThread;
     private Thread threadA;
     private Thread threadL;
-    private LightThread lightThread;
+    private Thread threadP;
+
 
     public SensoresFragment() {
         // Required empty public constructor
@@ -91,10 +95,14 @@ public class SensoresFragment extends Fragment implements View.OnClickListener{
         Button stopA = getActivity().findViewById(R.id.button_stopA);
         Button startL = getActivity().findViewById(R.id.button_startL);
         Button stopL = getActivity().findViewById(R.id.button_stopL);
+        Button startP = getActivity().findViewById(R.id.button_startP);
+        Button stopP = getActivity().findViewById(R.id.button_stopP);
         startA.setOnClickListener(this);
         stopA.setOnClickListener(this);
         startL.setOnClickListener(this);
         stopL.setOnClickListener(this);
+        startP.setOnClickListener(this);
+        stopP.setOnClickListener(this);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -124,7 +132,7 @@ public class SensoresFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()){
+        switch (v.getId()) {
 
             case R.id.button_startA:
                 Log.i(TAG, "ACELEROMETER START");
@@ -138,7 +146,7 @@ public class SensoresFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.button_stopA:
                 Log.i(TAG, "ACELEROMETER STOP");
-                if (acelerometerThread != null){
+                if (acelerometerThread != null) {
                     acelerometerThread.stop();
                     //threadA.stop();
                 }
@@ -154,11 +162,32 @@ public class SensoresFragment extends Fragment implements View.OnClickListener{
                 }
                 break;
             case R.id.button_stopL:
-                if (lightThread != null){
+                if (lightThread != null) {
                     lightThread.stop();
                     //threadL.stop();
                 }
                 Log.i(TAG, "LIGHT STOP");
+                break;
+
+            case R.id.button_startP:
+                try {
+                    proximityThread = new ProximityThread(getActivity());
+                    threadP = new Thread(proximityThread);
+                    Log.i(TAG, "PROXIMITY START");
+                    threadP.start();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+
+            case R.id.button_stopP:
+                if (proximityThread != null) {
+                    Log.i(TAG, "PROXIMITY STOP");
+                    proximityThread.stop();
+                    //threadL.stop();
+                } else {
+                    Log.i(TAG, "PROXIMITY SENSOR not started yet");
+                }
                 break;
         }
 

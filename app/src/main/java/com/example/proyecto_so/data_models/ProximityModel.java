@@ -1,11 +1,24 @@
 package com.example.proyecto_so.data_models;
 
-public class ProximityModel implements SensorModel{
+public class ProximityModel implements SensorModel {
 
+    private float x;
+
+    public ProximityModel() {
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public void setX(float x) {
+        this.x = x;
+    }
 
     @Override
     public String getNameSensor() {
-        return null;
+        String res = "Sensor de Proximidad";
+        return res;
     }
 
     @Override
@@ -17,4 +30,5 @@ public class ProximityModel implements SensorModel{
     public float[] getData() {
         return new float[0];
     }
+
 }
