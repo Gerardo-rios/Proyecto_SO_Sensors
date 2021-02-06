@@ -2,32 +2,32 @@ package com.example.proyecto_so.data_models;
 
 public class LightModel implements SensorModel{
 
-    private float x;
+    private float [] x;
 
     public LightModel() {
-
+        this.x = new float[3];
     }
 
-    public void setX(float x) {
-        this.x = x;
+    public LightModel(float [] d){
+        this.x = d;
     }
 
-    public float getX() {
-        return x;
+    public void setX(float [] data) {
+        this.x = data;
     }
 
     @Override
     public String getNameSensor() {
-        return null;
+        return "LIGHT";
     }
 
     @Override
     public Integer getImage() {
-        return null;
+        return 0;
     }
 
     @Override
     public float[] getData() {
-        return new float[0];
+        return x;
     }
 }
