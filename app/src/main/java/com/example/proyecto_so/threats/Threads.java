@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyecto_so.R;
 import com.example.proyecto_so.data_models.AcelerometerModel;
+import com.example.proyecto_so.data_models.GyroscopeModel;
 import com.example.proyecto_so.data_models.LightModel;
 import com.example.proyecto_so.data_models.ProximityModel;
 import com.example.proyecto_so.data_models.SensorModel;
@@ -60,11 +61,14 @@ public class Threads implements Runnable, Serializable {
                 this.sensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
                 this.data = new ProximityModel();
                 break;
+            case GYROSCOPE:
+                this.sensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+                this.data = new GyroscopeModel();
+                break;
         }
 
         this.exit = false;
         this.recyclerView = activity.findViewById(R.id.recycler);
-
 
     }
 

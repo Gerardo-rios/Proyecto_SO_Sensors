@@ -4,6 +4,7 @@ public enum SensorsEnum {
 
     ACCELEROMETER,
     LIGHT,
-    PROXIMITY
+    PROXIMITY,
+    GYROSCOPE
 
 }
