@@ -46,10 +46,6 @@ public class SensoresFragment extends Fragment implements View.OnClickListener{
 
     public final String TAG = SensoresFragment.class.getName();
 
-    //public Adapter adapter;
-    //List<Threads> sensores;
-    //RecyclerView recyclerView;
-
     Thread tg, tl, tp;
     Threads s1, s2, s3;
 
@@ -96,23 +92,6 @@ public class SensoresFragment extends Fragment implements View.OnClickListener{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        /*recyclerView = getActivity().findViewById(R.id.recycler);
-
-        this.sensores = new ArrayList<>();
-        try {
-            sensores.add(new Threads(getActivity(), SensorsEnum.GYROSCOPE));
-            sensores.add(new Threads(getActivity(), SensorsEnum.LIGHT));
-            sensores.add(new Threads(getActivity(), SensorsEnum.PROXIMITY));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        adapter = new Adapter(sensores);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(adapter);*/
-
-       //ImageView i1,i2,i3;
-
         ImageView e1 = getActivity().findViewById(R.id.btn_start1);
         ImageView e2 = getActivity().findViewById(R.id.btn_start2);
         ImageView e3 = getActivity().findViewById(R.id.btn_start3);
@@ -129,8 +108,6 @@ public class SensoresFragment extends Fragment implements View.OnClickListener{
         f3.setOnClickListener(this);
 
     }
-
-
 
     @Override
     public void onAttach(Context context) {

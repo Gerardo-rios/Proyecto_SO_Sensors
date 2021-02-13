@@ -34,10 +34,6 @@ public class Threads implements Runnable, Serializable {
 
     private SensorModel modelo;
 
-    /*RecyclerView recyclerView;
-    Adapter adapter;
-    List<Threads> sensores;*/
-
     TextView l1, c1, r1, l2, l3;
 
 
@@ -81,8 +77,6 @@ public class Threads implements Runnable, Serializable {
 
     public void setData(float data[]) {
 
-        //this.sensores = new ArrayList<>();
-
         if (this.modelo.getNameSensor().equals("GYROSCOPE")) {
 
             l1.setText(String.valueOf(data[0]));
@@ -98,9 +92,6 @@ public class Threads implements Runnable, Serializable {
             l3.setText(String.valueOf(data[0]));
 
         }
-
-       /* adapter = new Adapter(sensores);
-        recyclerView.setAdapter(adapter);*/
 
     }
 
